@@ -47,6 +47,8 @@ class Play extends Phaser.Scene {
 
         //initialize score
         this.p1Score = 0;
+        // localStorage.setItem("score", 0);
+        // this.highScore = 0;
 
         //display score
         let scoreConfig = {
@@ -61,7 +63,20 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
+        let highScoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#4287f5',
+            color: '#042861',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2, this.p1Score, scoreConfig);
+        this.highScore = this.add.text(game.config.width - borderUISize - borderPadding - 100, borderUISize + borderPadding * 2, localStorage.getItem("score"), highScoreConfig);
 
         //GAME OVER flag
         this.gameOver = false;
@@ -78,6 +93,19 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        //keep track of highest score
+        if(this.gameOver && localStorage.getItem("score") < this.p1Score){
+            // var score = 0;
+            localStorage.setItem("score", this.p1Score);
+            this.highScore.text = localStorage.getItem("score");
+            // var value = localStorage.getItem(highScore);
+            // console.log('high score' + localStorage.getItem("score"));
+        }
+        // if(localStorage.getItem("score") != null){
+        //     console.log('high score' + localStorage.getItem("score"));
+        // }
+
+
         //check key input for restart
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.restart();
