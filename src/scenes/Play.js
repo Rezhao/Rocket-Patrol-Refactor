@@ -65,8 +65,8 @@ class Play extends Phaser.Scene {
         }
         let highScoreConfig = {
             fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#4287f5',
+            fontSize: '24px',
+            // backgroundColor: '#4287f5',
             color: '#042861',
             align: 'right',
             padding: {
@@ -75,8 +75,21 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
+        let highScoreLabelConfig = {
+            fontFamily: 'Courier',
+            fontSize: '24px',
+            // backgroundColor: '#4287f5',
+            color: '#042861',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            // fixedWidth: 100
+        }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2, this.p1Score, scoreConfig);
-        this.highScore = this.add.text(game.config.width - borderUISize - borderPadding - 100, borderUISize + borderPadding * 2, localStorage.getItem("score"), highScoreConfig);
+        this.highScore = this.add.text(game.config.width - borderUISize - borderPadding - 100, borderUISize + borderPadding * 2.5, localStorage.getItem("score"), highScoreConfig);
+        this.add.text(game.config.width - borderUISize - borderPadding - 200, borderUISize + borderPadding * 2.5, "High Score: ", highScoreLabelConfig);
 
         //GAME OVER flag
         this.gameOver = false;
@@ -94,7 +107,7 @@ class Play extends Phaser.Scene {
 
     update() {
         //keep track of highest score
-        if(this.gameOver && localStorage.getItem("score") < this.p1Score){
+        if(localStorage.getItem("score") < this.p1Score){
             // var score = 0;
             localStorage.setItem("score", this.p1Score);
             this.highScore.text = localStorage.getItem("score");
