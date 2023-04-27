@@ -27,7 +27,7 @@
 
     Add your own (copyright-free) background music to the Play scene (please be mindful of the volume) (5)
 
-    Create a new scrolling tile sprite for the background (5)
+    FINISHED: Create a new scrolling tile sprite for the background (5)
     OR
     Implement the speed increase that happens after 30 seconds in the original game (5)
 
