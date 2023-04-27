@@ -12,17 +12,28 @@ class Rocket extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        if(!this.isFiring) {
-            if((keyLEFT.isDown) && this.x >= borderUISize + this.width) {
+        if(!this.isFiring && !useMouse) {
+            if(keyLEFT.isDown && this.x >= borderUISize + this.width) {
                 this.x -= this.moveSpeed;
-            } else if((keyRIGHT.isDown) && this.x <= game.config.width - borderUISize - this.width){
+            } else if(keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width){
                 this.x += this.moveSpeed;
             } 
-
         }
 
+        if(!this.isFiring && useMouse){
+            if(mouse.x >= borderUISize + this.width/2 && mouse.x <= game.config.width - borderUISize - this.width/2){
+                this.x = mouse.x;
+            }
+        }
+
+
         //fire button
-        if((Phaser.Input.Keyboard.JustDown(keyF) || mouse.isDown) && !this.isFiring) {
+        if(!useMouse && Phaser.Input.Keyboard.JustDown(keyF) && !this.isFiring) {
+            this.isFiring = true;
+            this.sfxRocket.play(); //play sfx
+        }
+
+        if(useMouse && mouse.isDown && !this.isFiring) {
             this.isFiring = true;
             this.sfxRocket.play(); //play sfx
         }
@@ -43,6 +54,14 @@ class Rocket extends Phaser.GameObjects.Sprite {
     reset() {
         this.isFiring = false;
         this.y = game.config.height - borderUISize - borderPadding;
+        if(useMouse){
+            this.x = mouse.x;
+        }
+        // this.x = mouse.x;
         // this.y = borderUISize + borderPadding;
     }
+
+    // pointerMove(pointer){
+    //     this.x = pointer.worldX;
+    // }
 }

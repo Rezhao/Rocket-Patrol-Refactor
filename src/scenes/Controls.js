@@ -1,6 +1,6 @@
-class Menu extends Phaser.Scene {
+class Controls extends Phaser.Scene {
     constructor() {
-        super("menuScene");
+        super("controlScene");
     }
 
     preload() {
@@ -14,7 +14,7 @@ class Menu extends Phaser.Scene {
         //menu text configuration
         let menuConfig = {
             fontFamily: 'Courier',
-            fontSize: '28px',
+            fontSize: '20px',
             backgroundColor: '#F3B141',
             color: '#843605',
             align: 'right',
@@ -26,45 +26,42 @@ class Menu extends Phaser.Scene {
         }
 
         //show menu text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Use ←→ arrows to move & (F) to fire', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'CONTROLS', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2, 'Press ← to use ←→ arrows to move & (F) to fire', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press ← for Novice or → for Expert', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press → to use mouse to move & (click) to fire', menuConfig).setOrigin(0.5);
 
         //define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         // keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
-        // useMouse = false;
+        useMouse = false;
     }
 
     update() {
         if(Phaser.Input.Keyboard.JustDown(keyLEFT)){
-            //easy mode
-            game.settings = {
-                spaceshipSpeed: 3,
-                gameTimer: 61000
-                // gameTimer: 20000
-            }
+            //arrows
+            // game.settings = {
+            //     spaceshipSpeed: 3,
+            //     gameTimer: 61000
+            //     // gameTimer: 20000
+            // }
             this.sound.play('sfx_select');
-            this.scene.start('controlScene');
+            this.scene.start('playScene');
             // this.timerEvent = this.time.addEvent({ delay: 60000});
         }
         if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){
-            //hard mode
-            game.settings = {
-                spaceshipSpeed: 4,
-                gameTimer: 46000
-            }
+            //mouse
+            // game.settings = {
+            //     spaceshipSpeed: 4,
+            //     gameTimer: 46000
+            // }
+            useMouse = true;
             this.sound.play('sfx_select');
-            this.scene.start('controlScene');
+            this.scene.start('playScene');
         }
-        // if(Phaser.Input.Keyboard.JustDown(keyM)){
-            
-        //     this.sound.play('sfx_select');
-        //     this.scene.start('playScene');
-        // }
+
     }
 }

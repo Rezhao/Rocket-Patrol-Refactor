@@ -13,7 +13,7 @@
 
     Implement a new timing/scoring mechanism that adds time to the clock for successful hits (15)
 
-    Implement mouse control for player movement and mouse click to fire (15)
+    FINISHED: Implement mouse control for player movement and mouse click to fire (15)
 
     Create 4 new explosion sound effects and randomize which one plays on impact (10)
 
@@ -38,20 +38,20 @@ let config = {
     type: Phaser.AUTO,
     width: 640,
     height: 480,
-    scene: [Menu, Play]
+    scene: [Menu, Controls, Play]
 }
 
 let game = new Phaser.Game(config);
 
 //set UI sizes
-let borderUISize = game.config.height / 15;
+let borderUISize = game.config.height / 15; //white border
 let borderPadding = borderUISize / 3;
 
 //reserve keyboard vars
 let keyF, keyR, keyLEFT, keyRIGHT;
 
 //reserve mouse var
-let mouse, input;
+let mouse, input, useMouse;
 
 //creates a score that keeps track of highest score
 localStorage.setItem("score", 0);

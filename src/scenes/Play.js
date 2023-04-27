@@ -34,6 +34,7 @@ class Play extends Phaser.Scene {
         //     useHandCursor: true,
         // });
 
+
         //add spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + borderUISize * 6, borderUISize * 4, 'spaceship', 0, 30).setOrigin(0, 0);
         this.ship02 = new Spaceship(this, game.config.width + borderUISize * 3, borderUISize * 5 + borderPadding * 2, 'spaceship', 0, 20).setOrigin(0, 0);
@@ -48,6 +49,7 @@ class Play extends Phaser.Scene {
         mouse = this.input.mousePointer;
         // this.addEventListener("mouseover", mouseOver);
         // input = this.input;
+        
 
         //animation config
         this.anims.create({
@@ -127,6 +129,9 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        // pointerMove(this.input.activePointer.worldX);
+
+
         //updates time remaining
         this.timer.text = Math.floor(this.clock.getRemainingSeconds());
         // var timerTemp = Math.floor(this.clock.getRemainingSeconds());
@@ -210,5 +215,9 @@ class Play extends Phaser.Scene {
 
         this.sound.play('sfx_explosion');
     }
+
+    // pointerMove(pointer) {
+    //     this.p1Rocket.x = pointer.worldX;
+    // }
 
 }
