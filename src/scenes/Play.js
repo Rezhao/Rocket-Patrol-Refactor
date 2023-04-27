@@ -27,6 +27,10 @@ class Play extends Phaser.Scene {
         //add rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width / 2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
 
+        this.p1Rocket.setInteractive({
+            useHandCursor: true,
+        });
+
         //add spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + borderUISize * 6, borderUISize * 4, 'spaceship', 0, 30).setOrigin(0, 0);
         this.ship02 = new Spaceship(this, game.config.width + borderUISize * 3, borderUISize * 5 + borderPadding * 2, 'spaceship', 0, 20).setOrigin(0, 0);
@@ -37,6 +41,10 @@ class Play extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+        mouse = this.input.mousePointer;
+        // this.addEventListener("mouseover", mouseOver);
+        // input = this.input;
 
         //animation config
         this.anims.create({
@@ -103,9 +111,18 @@ class Play extends Phaser.Scene {
         }, null, this);
 
 
+        //display time left
+        this.timer = this.add.text(game.config.width/2, borderUISize/2, game.settings.gameTimer, highScoreConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2 - 20, borderUISize/2, "Timer: ", highScoreLabelConfig).setOrigin(0.5);
+
+
+
     }
 
     update() {
+        //updates time remaining
+        this.timer.text = Math.floor(this.clock.getRemainingSeconds());
+
         //keep track of highest score
         if(localStorage.getItem("score") < this.p1Score){
             // var score = 0;
@@ -114,9 +131,6 @@ class Play extends Phaser.Scene {
             // var value = localStorage.getItem(highScore);
             // console.log('high score' + localStorage.getItem("score"));
         }
-        // if(localStorage.getItem("score") != null){
-        //     console.log('high score' + localStorage.getItem("score"));
-        // }
 
 
         //check key input for restart
@@ -139,16 +153,19 @@ class Play extends Phaser.Scene {
             // console.log('kaboom ship 03');
             this.p1Rocket.reset();
             this.shipExplode(this.ship03);
+            // this.clock = this.clock + 5000;
         }
         if(this.checkCollisions(this.p1Rocket, this.ship02)) {
             // console.log('kaboom ship 02');
             this.p1Rocket.reset();
             this.shipExplode(this.ship02);
+            // this.clock = this.clock + 5000;
         }
         if(this.checkCollisions(this.p1Rocket, this.ship01)) {
             // console.log('kaboom ship 01');
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
+            // this.clock = this.clock + 5000;
         }
 
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
@@ -187,6 +204,5 @@ class Play extends Phaser.Scene {
 
         this.sound.play('sfx_explosion');
     }
-
 
 }
