@@ -35,29 +35,17 @@ class Controls extends Phaser.Scene {
         //define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        // keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
-
-        useMouse = false;
     }
 
     update() {
         if(Phaser.Input.Keyboard.JustDown(keyLEFT)){
-            //arrows
-            // game.settings = {
-            //     spaceshipSpeed: 3,
-            //     gameTimer: 61000
-            //     // gameTimer: 20000
-            // }
+            //use arrows to play
+            useMouse = false;
             this.sound.play('sfx_select');
             this.scene.start('playScene');
-            // this.timerEvent = this.time.addEvent({ delay: 60000});
         }
         if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){
-            //mouse
-            // game.settings = {
-            //     spaceshipSpeed: 4,
-            //     gameTimer: 46000
-            // }
+            //use mouse to play
             useMouse = true;
             this.sound.play('sfx_select');
             this.scene.start('playScene');

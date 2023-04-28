@@ -4,7 +4,7 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('rocket', 'assets/rocket.png');
+        this.load.image('rocket', 'assets/crab.png');
         this.load.image('spaceship', 'assets/spaceship.png');
         // this.load.image('starfield', 'assets/starfield.png');
         this.load.image('beach', 'assets/beach.png');
@@ -28,12 +28,7 @@ class Play extends Phaser.Scene {
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
 
         //add rocket (p1)
-        this.p1Rocket = new Rocket(this, game.config.width / 2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
-
-        // this.p1Rocket.setInteractive({
-        //     useHandCursor: true,
-        // });
-
+        this.p1Rocket = new Rocket(this, game.config.width / 2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5);
 
         //add spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + borderUISize * 6, borderUISize * 4, 'spaceship', 0, 30).setOrigin(0, 0);
@@ -46,11 +41,9 @@ class Play extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
+        //define mouse
         mouse = this.input.mousePointer;
-        // this.addEventListener("mouseover", mouseOver);
-        // input = this.input;
         
-
         //animation config
         this.anims.create({
             key: 'explode',
@@ -60,8 +53,6 @@ class Play extends Phaser.Scene {
 
         //initialize score
         this.p1Score = 0;
-        // localStorage.setItem("score", 0);
-        // this.highScore = 0;
 
         //display score
         let scoreConfig = {
@@ -129,9 +120,6 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        // pointerMove(this.input.activePointer.worldX);
-
-
         //updates time remaining
         this.timer.text = Math.floor(this.clock.getRemainingSeconds());
         // var timerTemp = Math.floor(this.clock.getRemainingSeconds());
@@ -215,9 +203,5 @@ class Play extends Phaser.Scene {
 
         this.sound.play('sfx_explosion');
     }
-
-    // pointerMove(pointer) {
-    //     this.p1Rocket.x = pointer.worldX;
-    // }
 
 }

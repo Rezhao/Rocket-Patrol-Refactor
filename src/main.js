@@ -51,7 +51,7 @@ let borderPadding = borderUISize / 3;
 let keyF, keyR, keyLEFT, keyRIGHT;
 
 //reserve mouse var
-let mouse, input, useMouse;
+let mouse, useMouse;
 
 //creates a score that keeps track of highest score
 localStorage.setItem("score", 0);

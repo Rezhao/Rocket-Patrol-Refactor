@@ -8,9 +8,14 @@ class Menu extends Phaser.Scene {
         this.load.audio('sfx_select', './assets/blip_select12.wav');
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
         this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
+
+        //load images
+        this.load.image('home', 'assets/home.png');
     }
 
     create(){
+        this.home = this.add.tileSprite(0, 0, 640, 480,'home').setOrigin(0, 0);
+
         //menu text configuration
         let menuConfig = {
             fontFamily: 'Courier',
@@ -35,9 +40,6 @@ class Menu extends Phaser.Scene {
         //define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        // keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
-
-        // useMouse = false;
     }
 
     update() {
@@ -46,11 +48,9 @@ class Menu extends Phaser.Scene {
             game.settings = {
                 spaceshipSpeed: 3,
                 gameTimer: 61000
-                // gameTimer: 20000
             }
             this.sound.play('sfx_select');
             this.scene.start('controlScene');
-            // this.timerEvent = this.time.addEvent({ delay: 60000});
         }
         if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){
             //hard mode
@@ -61,10 +61,5 @@ class Menu extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.scene.start('controlScene');
         }
-        // if(Phaser.Input.Keyboard.JustDown(keyM)){
-            
-        //     this.sound.play('sfx_select');
-        //     this.scene.start('playScene');
-        // }
     }
 }
