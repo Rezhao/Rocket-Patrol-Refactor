@@ -184,7 +184,13 @@ class Play extends Phaser.Scene {
         }
     }
 
+    addTime(miliseconds){
+        this.clock.delay += miliseconds;
+    }
+
     shipExplode(ship) {
+        this.addTime(5000);
+
         //temporarily hide ship
         ship.alpha = 0;
         

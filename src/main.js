@@ -11,7 +11,7 @@
     Create a new enemy Spaceship type (w/ new artwork) that's smaller, moves faster, 
     and is worth more points (15)
 
-    Implement a new timing/scoring mechanism that adds time to the clock for successful hits (15)
+    FINISHED: Implement a new timing/scoring mechanism that adds time to the clock for successful hits (15)
 
     FINISHED: Implement mouse control for player movement and mouse click to fire (15)
 
@@ -21,7 +21,7 @@
 
     Using a texture atlas, create a new animated sprite for the Spaceship enemies (10)
 
-    Create a new title screen (e.g., new artwork, typography, layout) (10)
+    FINISHED: Create a new title screen (e.g., new artwork, typography, layout) (10)
 
     FINISHED: Track a high score that persists across scenes and display it in the UI (5)
 
