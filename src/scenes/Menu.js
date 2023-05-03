@@ -9,6 +9,8 @@ class Menu extends Phaser.Scene {
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
         this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
 
+        this.load.audio('play_song', './assets/Wallpaper.mp3');
+
         //load images
         this.load.image('home', 'assets/home.png');
     }
@@ -21,8 +23,6 @@ class Menu extends Phaser.Scene {
             fontFamily: 'Helvetica Neue',
             fontSize: '50px',
             fontStyle: 'bold',
-            // shadow: true,
-            // backgroundColor: '#F3B141',
             color: '#ffa8db',
             align: 'right',
             padding: {
@@ -36,8 +36,6 @@ class Menu extends Phaser.Scene {
             fontFamily: 'Helvetica Neue',
             fontSize: '24px',
             fontStyle: 'bold',
-            // shadow: true,
-            // backgroundColor: '#F3B141',
             color: '#099673',
             align: 'right',
             padding: {
