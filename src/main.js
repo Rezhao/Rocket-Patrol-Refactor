@@ -12,6 +12,7 @@
         3. Implement mouse control for player movement and mouse click to fire (15)
             --> player has ability to choose if they want to use arrows or mouse to move and fire the rocket
             --> if mouse is chosen, the rocket will follow the x direction of the mouse and fire when they click
+            --> mouse must be in bounds of game window to work
 
         4. Display the time remaining (in seconds) on the screen (10)
             --> the amount of time remaining is displayed on the top of the screen/on the white border
