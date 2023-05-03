@@ -4,15 +4,13 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('rocket', 'assets/crab.png');
-        // this.load.image('spaceship', 'assets/spaceship.png');
-        // this.load.image('starfield', 'assets/starfield.png');
+        this.load.image('crab', 'assets/crab.png');
+        this.load.image('rocket', 'assets/bubble.png');
         this.load.image('beach', 'assets/beach.png');
         this.load.image('pineapple', 'assets/pineapple.png');
         this.load.image('coconut', 'assets/coconut.png');
         this.load.image('watermelon', 'assets/watermelon.png');
-
-        // this.load.audio('play_song', './assets/Wallpaper.mp3');
+        this.load.image('glow', 'assets/glow.png');
 
         //load spritesheet
         this.load.spritesheet('explosion', 'assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
@@ -21,25 +19,22 @@ class Play extends Phaser.Scene {
     create(){
         //place tile sprite
         this.beach = this.add.tileSprite(0, 0, 640, 480,'beach').setOrigin(0, 0);
-        // this.beach.scale(0.5);
-
-        //green UI background
-        // this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0);
-        // this.add.rectangle(0, borderUISize, game.config.width, borderUISize * 2, 0x33d8dd).setOrigin(0, 0);
-        // white borders
-        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
-
-        //add rocket (p1)
-        this.p1Rocket = new Rocket(this, game.config.width / 2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5);
 
         //add spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + borderUISize * 6, borderUISize * 4, 'watermelon', 0, 40).setOrigin(0, 0);
         this.ship01.moveSpeed += 3;
         this.ship02 = new Spaceship(this, game.config.width + borderUISize * 3, borderUISize * 5 + borderPadding * 2, 'coconut', 0, 20).setOrigin(0, 0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize * 6 + borderPadding * 4, 'pineapple', 0, 10).setOrigin(0, 0);
+
+        //white border
+        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
+        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
+        this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
+        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
+
+        //initialize rocket and crab
+        this.p1Rocket = new Rocket(this, game.config.width / 2, game.config.height - borderUISize - borderPadding + 5, 'rocket').setOrigin(0.5, 0);
+        this.crab = this.add.image(this.p1Rocket.x, game.config.height - borderUISize - borderPadding, 'crab');
 
         //define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
@@ -49,18 +44,11 @@ class Play extends Phaser.Scene {
 
         //define mouse
         mouse = this.input.mousePointer;
-        
-        //animation config
-        this.anims.create({
-            key: 'explode',
-            frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 9, first: 0}),
-            frameRate: 30
-        });
 
         //initialize score
         this.p1Score = 0;
 
-        //display score
+        //score stylization
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
@@ -73,33 +61,28 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        let highScoreConfig = {
+
+        //timer stylization
+        let timerConfig = {
             fontFamily: 'Courier',
             fontSize: '24px',
-            // backgroundColor: '#4287f5',
             color: '#042861',
             align: 'right',
             padding: {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 100
         }
-        let highScoreLabelConfig = {
-            fontFamily: 'Courier',
-            fontSize: '24px',
-            // backgroundColor: '#4287f5',
-            color: '#042861',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            // fixedWidth: 100
-        }
+
+        //display player's current score
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding, this.p1Score, scoreConfig);
-        this.highScore = this.add.text(game.config.width - borderUISize - borderPadding - 100, borderUISize + borderPadding * 1.25, localStorage.getItem("score"), highScoreConfig);
-        this.add.text(game.config.width - borderUISize - borderPadding - 230, borderUISize + borderPadding * 1.25, "High Score: ", highScoreLabelConfig);
+
+        //display high score
+        this.add.rectangle(game.config.width - borderUISize - borderPadding - 260, borderUISize + borderPadding, 260, 40, 0xedcb8f).setOrigin(0, 0);
+        scoreConfig.fixedWidth = 0;
+        scoreConfig.fontSize = '25px';
+        this.highScore = this.add.text(game.config.width - borderUISize - borderPadding - 70, borderUISize + borderPadding * 1.25, localStorage.getItem("score"), scoreConfig);
+        this.add.text(game.config.width - borderUISize - borderPadding - 255, borderUISize + borderPadding * 1.25, "High Score: ", scoreConfig);
 
         //GAME OVER flag
         this.gameOver = false;
@@ -112,28 +95,27 @@ class Play extends Phaser.Scene {
             this.gameOver = true;
         }, null, this);
 
-        // this.clock = this.time.delayedCall(30000, () => {
-        //     game.settings.spaceshipSpeed += 1;
-        // }, null, this);
-
-
         //display time left
-        this.timer = this.add.text(game.config.width/2, borderUISize/2, "Timer: ", highScoreConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2 - 40, borderUISize/2, "Timer: ", highScoreLabelConfig).setOrigin(0.5);
-        // let timerTemp = this.add.text(game.config.width/2, borderUISize/2, game.settings.gameTimer, highScoreConfig).setOrigin(0.5);
+        this.timer = this.add.text(game.config.width/2 + 30, borderUISize/2, "Timer: ", timerConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2 - 30, borderUISize/2, "Timer: ", timerConfig).setOrigin(0.5);
         
-
+        //play and loop song in background
         this.song = this.sound.add('play_song');
         this.song.setLoop(true);
         this.song.play();
 
-
-        this.fireText = this.add.text(game.config.width/2, borderUISize * 2, 'FIRE', scoreConfig).setOrigin(0.5);
+        //adding fire text
+        scoreConfig.backgroundColor = '#eb8f81';
+        scoreConfig.color = '#bf2a13';
+        this.fireText = this.add.text(game.config.width/2, borderUISize * 3.5, 'FIRE', scoreConfig).setOrigin(0.5);
         this.fireText.setVisible(false);
 
     }
 
     update() {
+        //makes crab image follow the rocket
+        this.crabFollow();
+
         //display fire ui
         if(this.p1Rocket.isFiring){
             this.fireText.setVisible(true);
@@ -143,7 +125,6 @@ class Play extends Phaser.Scene {
 
         //updates time remaining
         this.timer.text = Math.floor(this.clock.getRemainingSeconds());
-        // var timerTemp = Math.floor(this.clock.getRemainingSeconds());
 
         //keep track of highest score
         if(localStorage.getItem("score") < this.p1Score){
@@ -170,28 +151,22 @@ class Play extends Phaser.Scene {
 
         //check collisions
         if(this.checkCollisions(this.p1Rocket, this.ship03)) {
-            // console.log('kaboom ship 03');
             this.p1Rocket.reset();
             this.shipExplode(this.ship03);
             this.addTime(2000);
-            // this.clock = this.clock + 5000;
-            // timerTemp += 5000;
         }
         if(this.checkCollisions(this.p1Rocket, this.ship02)) {
-            // console.log('kaboom ship 02');
             this.p1Rocket.reset();
             this.shipExplode(this.ship02);
             this.addTime(2000);
-            // this.clock = this.clock + 5000;
         }
         if(this.checkCollisions(this.p1Rocket, this.ship01)) {
-            // console.log('kaboom ship 01');
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
             this.addTime(4000);
-            // this.clock = this.clock + 5000;
         }
 
+        //goes back to menu
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.song.stop();
             this.scene.start("menuScene");
@@ -211,29 +186,39 @@ class Play extends Phaser.Scene {
     }
 
     addTime(miliseconds){
+        //adding time to clock when player hits ship
         this.clock.delay += miliseconds;
     }
 
     shipExplode(ship) {
-        // this.addTime(2000);
+        //creating particle emitter
+        var emitter = this.add.particles(ship.x, ship.y, 'glow', {
+            lifespan: 4000,
+            speed: { min: 150, max: 250 },
+            scale: { start: 0.8, end: 0 },
+            gravityY: 150,
+            blendMode: 'ADD',
+            emitting: false
+        });
 
         //temporarily hide ship
         ship.alpha = 0;
-        
-        //create explosion sprite at ship's position
-        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
-        boom.anims.play('explode'); //play explosion animation
-        boom.on('animationcomplete', () => { //callback after anim completes
-            ship.reset(); //reset ship position
-            ship.alpha = 1; //make ship visible again
-            boom.destroy(); //remove explosion sprite
-        });
+
+        //play particle emitter
+        emitter.explode(30);
+        ship.reset()
+        ship.alpha = 1;
 
         //score add and repaint
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
 
         this.sound.play('sfx_explosion');
+    }
+
+    crabFollow() {
+        //crab can only move along x axis
+        this.crab.x = this.p1Rocket.x;
     }
 
 }

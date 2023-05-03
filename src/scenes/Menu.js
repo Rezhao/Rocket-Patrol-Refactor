@@ -8,7 +8,6 @@ class Menu extends Phaser.Scene {
         this.load.audio('sfx_select', './assets/blip_select12.wav');
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
         this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
-
         this.load.audio('play_song', './assets/Wallpaper.mp3');
 
         //load images
@@ -16,9 +15,10 @@ class Menu extends Phaser.Scene {
     }
 
     create(){
+        //home background
         this.home = this.add.tileSprite(0, 0, 640, 480,'home').setOrigin(0, 0);
 
-        //menu text configuration
+        //title text configuration
         let titleConfig = {
             fontFamily: 'Helvetica Neue',
             fontSize: '50px',
@@ -32,6 +32,7 @@ class Menu extends Phaser.Scene {
             fixedWidth: 0
         }
 
+        //menu text configuration
         let menuConfig = {
             fontFamily: 'Helvetica Neue',
             fontSize: '24px',
@@ -45,26 +46,22 @@ class Menu extends Phaser.Scene {
             fixedWidth: 0
         }
 
-        //show menu text
+        //display game title
         var text = this.add.text(game.config.width/2, game.config.height/4 - borderUISize - borderPadding + 80, 'BEACH VIBES', titleConfig).setOrigin(0.5);
         text.setShadow(4, 4, '#ff0096', 5);
         
-        //x,y,width,height
+        //sub title: select game level
         this.add.rectangle(borderUISize*4.5 + borderPadding*4.5, game.config.height/4 + borderUISize + borderPadding + 49, game.config.width - borderPadding * 9 - borderUISize * 9, borderUISize * 1.5, 0x91e3cf).setOrigin(0, 0);
-
-        //x,y,radius,color
         this.add.circle(borderUISize*4.5 + borderPadding*4.5, game.config.height/4 + borderUISize + borderPadding + 49, borderUISize * 0.75, 0x91e3cf).setOrigin(0.5, 0);
         this.add.circle(borderUISize*4.5 + borderPadding*4.5 + game.config.width - borderPadding * 9 - borderUISize * 9, game.config.height/4 + borderUISize + borderPadding + 49, borderUISize * 0.75, 0x91e3cf).setOrigin(0.5, 0);
-
         this.add.text(game.config.width/2, game.config.height/4 + borderUISize*2 + borderPadding + 42, 'Select a game level:', menuConfig).setOrigin(0.5);
-        // menuConfig.backgroundColor = '#00FF00';
+        
+        //arrow select description
         menuConfig.color = '#b8236d';
-        // menuConfig.fontStyle = 'normal';
         menuConfig.fontSize = '22px';
-        //x,y,width,height
-        // this.add.rectangle(game.config.width/4, game.config.height/3 + borderUISize*2 + borderPadding*1.5, game.config.width/2, borderUISize*1.5, 0x943464).setOrigin(0, 0);
         this.add.text(game.config.width/2, game.config.height/3 + borderUISize*2 + borderPadding*2 + 45, 'Press ← or → to select', menuConfig).setOrigin(0.5);
 
+        //new style for buttons
         menuConfig.color = '#f7dfcd';
         menuConfig.fontSize = '20px';
 
